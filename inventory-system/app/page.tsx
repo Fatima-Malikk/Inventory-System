@@ -1,75 +1,92 @@
+// "use client"
+// import Header from "./../components/Header";
+// import AddProduct from './../components/AddProduct';
+// import DisplayProduct from './../components/DisplayProduct';
+// import Homepage from './../components/Homepage';
+
+// export default function Home() {
+ 
+
+//   return (
+//     <>
+      
+//       <Header />
+//        <AddProduct />
+//    <DisplayProduct/> 
+     
+
+//     </>
+//   );
+// }
+
 "use client"
-import Header from "./../components/Header";
-import { useState } from "react";
+
+import React, { useState } from 'react';
+import Header from './../components/Header';
 import AddProduct from './../components/AddProduct';
+import DisplayProduct from './../components/DisplayProduct';
+import Homepage from './../components/Homepage';
 
 export default function Home() {
- 
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = () => {
+    // Hardcoded credentials
+    const hardcodedUsername = 'admin';
+    const hardcodedPassword = 'password';
+
+    if (username === hardcodedUsername && password === hardcodedPassword) {
+      setLoggedIn(true);
+    } else {
+      setError('Invalid username or password');
+    }
+  };
 
   return (
     <>
-      <Header />
-      <AddProduct/>
-
-
-      <section className="text-gray-600 body-font">
-  <div className="container px-5 py-24 mx-auto">
-    <div className="flex flex-col text-center w-full mb-20">
-      <h1 className="sm:text-4xl text-3xl font-medium title-font mb-2 text-gray-900">Products</h1>
-     </div>
-    <div className="lg:w-2/3 w-full mx-auto overflow-auto">
-      <table className="table-auto w-full text-left whitespace-no-wrap">
-        <thead>
-          <tr>
-            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">Plan</th>
-            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Speed</th>
-            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Storage</th>
-            <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Price</th>
-            <th className="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="px-4 py-3">Start</td>
-            <td className="px-4 py-3">5 Mb/s</td>
-            <td className="px-4 py-3">15 GB</td>
-            <td className="px-4 py-3 text-lg text-gray-900">Free</td>
-            <td className="w-10 text-center">
-              <input name="plan" type="radio"/>
-            </td>
-          </tr>
-          <tr>
-            <td className="border-t-2 border-gray-200 px-4 py-3">Pro</td>
-            <td className="border-t-2 border-gray-200 px-4 py-3">25 Mb/s</td>
-            <td className="border-t-2 border-gray-200 px-4 py-3">25 GB</td>
-            <td className="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">$24</td>
-            <td className="border-t-2 border-gray-200 w-10 text-center">
-              <input name="plan" type="radio"/>
-            </td>
-          </tr>
-          <tr>
-            <td className="border-t-2 border-gray-200 px-4 py-3">Business</td>
-            <td className="border-t-2 border-gray-200 px-4 py-3">36 Mb/s</td>
-            <td className="border-t-2 border-gray-200 px-4 py-3">40 GB</td>
-            <td className="border-t-2 border-gray-200 px-4 py-3 text-lg text-gray-900">$50</td>
-            <td className="border-t-2 border-gray-200 w-10 text-center">
-              <input name="plan" type="radio"/>
-            </td>
-          </tr>
-          <tr>
-            <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3">Exclusive</td>
-            <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3">48 Mb/s</td>
-            <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3">120 GB</td>
-            <td className="border-t-2 border-b-2 border-gray-200 px-4 py-3 text-lg text-gray-900">$72</td>
-            <td className="border-t-2 border-b-2 border-gray-200 w-10 text-center">
-              <input name="plan" type="radio"/>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
+      {!loggedIn ? (
+        <div className="flex justify-center items-center h-screen bg-gray-100">
+          <div className="bg-white p-8 rounded shadow-md">
+            <h2 className="text-2xl mb-4">Login</h2>
+            {error && <div className="text-red-500 mb-4">{error}</div>}
+            <div className="mb-4">
+              <label htmlFor="username" className="block mb-1">Username</label>
+              <input
+                type="text"
+                id="username"
+                className="w-full border rounded py-2 px-3"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="password" className="block mb-1">Password</label>
+              <input
+                type="password"
+                id="password"
+                className="w-full border rounded py-2 px-3"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <button
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              onClick={handleLogin}
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <Header />
+          <AddProduct />
+          <DisplayProduct />
+        </>
+      )}
     </>
   );
 }
